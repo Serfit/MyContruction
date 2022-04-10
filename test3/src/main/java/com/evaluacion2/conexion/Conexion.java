@@ -19,7 +19,7 @@ public class Conexion {
         try {
             Class.forName(CLASSNAME);
             con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Conexion a base de datos exitisa!!!");
+            System.out.println("Conexion a base de datos exitosa!!!");
         } catch (ClassNotFoundException e) {
             System.err.println("Error"+ e);
         }catch(SQLException e){
