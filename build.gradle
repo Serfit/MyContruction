@@ -1,4 +1,4 @@
-builscript{
+buildscript{
 	repositories {
 		jcenter()
 	}
