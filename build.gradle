@@ -1,0 +1,44 @@
+builscript{
+	repositories {
+		jcenter()
+	}
+	dependencies{
+		classpath( group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.28.1')
+	}
+	version = currentVersion
+	apply plugin: 'com.jfrog.artifactory'
+	apply plugin: 'java'
+	apply plugin: 'maven-publish'
+	
+	dependecies{
+		testCompile 'junit:junit:4.7'
+	}
+	publishing{
+		publications {
+			mavenJava(MavenPublication){
+				from components.java
+			}
+		}
+	}
+	artifactory{
+		contextUrl = 'http://localhost:8082/artifactory'
+		publish {
+			repository {
+				repoKey = 'libs-snapshot-local'
+				username = "${artifactory_user}"
+				password = "${artifactory_password}"
+			}
+			defaults {
+				publications('mavenJava')
+				publishArtifacts = true
+				
+				properties = ['qa.level': 'basic', 'dev.team' : 'core']
+				
+				publishPom = true
+			}
+		}
+		resolve {
+			repoKey = 'jcenter'
+		}
+	}
+}
